@@ -1,22 +1,27 @@
 import express, { Express, Request, Response } from 'express'
+import { compose } from 'ramda'
 import chalk from 'chalk'
+import cors from 'cors'
+
 import { logger } from './logger'
 
 const app: Express = express()
 
 const PORT: number = 3000
 
-app.use(logger)
+app.use(logger).use(cors)
 
 app.get('/ping', async (_: Request, res: Response) => {
-  res.sendStatus(200)
+  res.send(200)
 })
 
 app.listen(PORT, () => {
-  const port = chalk.white(PORT.toString())
+  const port: string = chalk.white(PORT.toString())
+  const log: Function = compose(console.log, chalk.blueBright)
+
   console.clear()
-  console.log(chalk.blueBright(`Сервер доступен на порту ${port}`))
-  console.log(chalk.blueBright(`Ссылка на приложение: ${chalk.white(`http://localhost:${PORT}`)}`))
-  console.log(chalk.blueBright('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-'))
+  log(`Сервер доступен на порту ${port}`)
+  log(`Ссылка на приложение: ${chalk.white(`http://localhost:${PORT}`)}`)
+  log('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-')
   console.log('\n')
 })

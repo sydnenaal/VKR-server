@@ -1,23 +1,21 @@
-const Koa = require('koa')
-const chalk = require('chalk')
-const { logger } = require('./logger')
-const Router = require('@koa/router')
-const cors = require('@koa/cors')
+import Express from 'express'
+import chalk from 'chalk'
+import { logger } from './logger'
 
-const app = new Koa()
-const router = new Router()
+const app = new Express()
 
 const PORT = 3000
 
-router.get('/a', async (ctx) => {
-  ctx.status = 200
+app.use(logger)
+
+app.get('/', async (req, res) => {
+  res.send('hello')
 })
 
-app.use(logger).use(cors()).use(router.routes()).use(logger).use(router.allowedMethods())
-
 app.listen(PORT, () => {
+  const port = chalk.yellow(PORT.toString())
   console.clear()
-  console.log(chalk.blue(`Сервер доступен на порту ${PORT}`))
-  console.log(chalk.blue('Добро пожаловать!'))
+  console.log(chalk.blueBright(`Сервер доступен на порту ${port}`))
+  console.log(chalk.blueBright('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-'))
   console.log('\n')
 })

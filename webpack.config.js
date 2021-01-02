@@ -1,15 +1,20 @@
 const path = require('path')
-const pkg = require('./package.json')
+const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: { main: './index.js' },
+  entry: ['@babel/polyfill', './index.js'],
   target: 'node',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
     compress: true,
     port: 9000,
   },
+  node: {
+    __dirname: false,
+    __filename: false,
+  },
+  externals: [nodeExternals()],
   module: {
     rules: [
       {
@@ -26,8 +31,8 @@ module.exports = {
   },
   output: {
     path: path.join(__dirname, 'dist'),
-    filename: '[name].bundle.js',
-    umdNamedDefine: true,
+    publicPath: '/',
+    filename: '[name].js',
   },
   resolve: {
     extensions: ['.js'],

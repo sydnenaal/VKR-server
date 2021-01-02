@@ -6,28 +6,30 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "start": "node src/index.js",
-    "build": "webpack",
-    "start:dev": "webpack serve"
+    "start": "node dist/main.js",
+    "clean": "rimraf ./dist",
+    "build": "npm run clean && webpack --mode=production",
+    "start:dev": "webpack serve --mode=development"
   },
   "devDependencies": {
     "@babel/core": "^7.12.10",
     "@babel/plugin-syntax-dynamic-import": "^7.8.3",
     "@babel/plugin-transform-async-to-generator": "^7.12.1",
+    "@babel/polyfill": "^7.12.1",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-typescript": "^7.12.7",
     "babel-loader": "^8.2.2",
     "eslint": "^7.17.0",
+    "rimraf": "^3.0.2",
     "webpack": "^5.11.1",
     "webpack-cli": "^4.3.1",
-    "webpack-dev-server": "^3.11.1"
+    "webpack-dev-server": "^3.11.1",
+    "webpack-node-externals": "^2.5.2"
   },
   "dependencies": {
-    "@koa/cors": "^3.1.0",
-    "@koa/router": "^10.0.0",
     "chalk": "^4.1.0",
     "date-fns": "^2.16.1",
-    "koa": "^2.13.0",
+    "express": "^4.17.1",
     "ramda": "^0.27.1"
   }
 }

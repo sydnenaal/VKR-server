@@ -1,0 +1,23 @@
+{
+  "parser": "babel-eslint",
+  "env": {
+    "node": true,
+    "jest": true
+  },
+  "rules": {
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "peerDependencies": true,
+        "devDependencies": ["**/__tests__/*.js", "**/*.test.js"]
+      }
+    ],
+    "semi": [2, "never"],
+    "arrow-body-style": "warn",
+    "max-len": ["error", 120],
+    "no-unused-expressions": "off",
+    "arrow-parens": ["error", "as-needed"],
+    "object-curly-newline": ["off", { "multiline": true }],
+    "function-paren-newline": ["off"]
+  }
+}

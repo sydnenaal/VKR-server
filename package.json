@@ -1,0 +1,14 @@
+{
+  "name": "vkr-server",
+  "version": "0.0.1",
+  "description": "Staff tracker application API",
+  "main": "src/index.js",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "start": "node src/index.js"
+  },
+  "devDependencies": {
+    "eslint": "^7.17.0"
+  }
+}

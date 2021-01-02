@@ -3,7 +3,7 @@ const nodeExternals = require('webpack-node-externals')
 
 module.exports = {
   context: path.resolve(__dirname, 'src'),
-  entry: ['@babel/polyfill', './index.js'],
+  entry: ['@babel/polyfill', './index.ts'],
   target: 'node',
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -27,6 +27,11 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.ts?$/,
+        exclude: /node_modules/,
+        use: ['ts-loader'],
+      },
     ],
   },
   output: {
@@ -35,6 +40,6 @@ module.exports = {
     filename: '[name].js',
   },
   resolve: {
-    extensions: ['.js'],
+    extensions: ['.ts', '.js'],
   },
 }

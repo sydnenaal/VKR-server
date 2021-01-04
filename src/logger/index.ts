@@ -1,30 +1,22 @@
-import { Request, Response } from 'express'
-import chalk from 'chalk'
+const chalk = require('chalk')
 import { format } from 'date-fns'
 
-import { getColorByStatus, getColorByReqLength } from './utils'
+import { getColorByStatus, getColorByReqLength } from './utils.js'
 
-interface logParams {
-  method: string;
-  status: string;
-  ms: string;
-  url: string;
-}
-
-export async function logger(req: Request, res: Response, next: Function): Promise<void> {
-  const date: string = format(Date.now(), 'yyyy-MM-dd hh:mm:ss')
-  const coloredConsoleDate: string = chalk.dim(`[ ${date} ]: `)
-  const start: number = Number(new Date())
+export async function logger(req: any, res: any, next: any) {
+  const date = format(Date.now(), 'yyyy-MM-dd hh:mm:ss')
+  const coloredConsoleDate = chalk.dim(`[ ${date} ]: `)
+  const start = Number(new Date())
 
   await next()
 
-  const params: logParams = {
+  const params = {
     method: chalk.blue(req.method),
     status: getColorByStatus(res.statusCode),
     ms: getColorByReqLength(Number(new Date()) - start),
     url: req.url,
   }
-  const parsedParams: string = Object.values(params).reduce((acc, item) => `${acc} ${item}`, '')
+  const parsedParams = Object.values(params).reduce((acc, item) => `${acc} ${item}`, '')
 
   console.log(`${coloredConsoleDate}${parsedParams}`)
 }

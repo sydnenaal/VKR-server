@@ -1,0 +1,8 @@
+{
+    "name": "vkr-server",
+    "version": "0.0.1",
+    "private": true,
+    "dependencies": {
+        "@vkr/app-schema": "^0.0.1"
+    }
+}

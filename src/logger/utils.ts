@@ -1,4 +1,4 @@
-import chalk from 'chalk'
+const chalk = require('chalk')
 
 export function getColorByReqLength(length: number): string {
   if (length >= 20) {

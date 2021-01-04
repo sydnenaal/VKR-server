@@ -5,6 +5,7 @@
         "moduleResolution": "node",
         "declaration": true,
         "composite": true,
-        "outDir": "../../../dist/packages/@vkr/app-schema" 
+        "esModuleInterop": true,
+        "outDir": "../../../dist/packages/@vkr/app-users" 
     }
 }

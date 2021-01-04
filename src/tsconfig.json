@@ -5,6 +5,7 @@
     "moduleResolution": "node",
     "declaration": true,
     "composite": true,
+    "esModuleInterop": true,
     "outDir": "../dist/src"
   }
 }

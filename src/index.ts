@@ -1,7 +1,6 @@
-const express = require('express')
-const chalk = require('chalk')
-const cors = require('cors')
-
+import express from 'express'
+import chalk from 'chalk'
+import cors from 'cors'
 import { compose } from 'ramda'
 
 import { logger } from './logger'

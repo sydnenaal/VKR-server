@@ -5,11 +5,12 @@ const path = require('path')
 // Change absolute paths to npm packages to relative
 function parseJSFiles(pathToFile) {
   const contents = fs.readFileSync(pathToFile, 'utf-8')
+  const pathToDist = path.join(__dirname, '..', 'dist')
 
   if (contents.includes('@vkr/')) {
     //build relative path to 'dist' directory
     const pathToPackages = pathToFile
-      .slice(path.join(__dirname, '..', 'dist').length + 1, pathToFile.length)
+      .slice(pathToDist.length + 1, pathToFile.length)
       .split('')
       .filter((item) => item === '\\')
       .reduce((acc, item) => `${acc}../`, '')
@@ -38,5 +39,9 @@ function fixCodeAliases(directory) {
 }
 
 exec('rimraf ./dist && tsc --build', () => {
+  console.info('Replace absolute paths to relative in build...')
+
   fixCodeAliases(path.join(__dirname, '..', 'dist'))
+
+  console.log('Paths replaced')
 })

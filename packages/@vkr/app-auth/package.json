@@ -1,0 +1,11 @@
+{
+    "name": "@vkr/app-auth",
+    "version": "0.0.1",
+    "description": "VKR Server auth",
+    "main": "index.ts",
+    "private": false,
+    "devDependencies": {
+      "ts-node": "^9.1.1",
+      "typescript": "^4.1.3"
+    }
+  }

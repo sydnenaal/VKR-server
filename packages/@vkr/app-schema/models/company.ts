@@ -1,29 +1,27 @@
-import Mongoose from 'mongoose'
+import Mongoose, { Schema, Document } from 'mongoose'
 
 import { AddressSchema, Address } from './address'
 import { currencies } from './enums'
-import { TimingType, EmployeeType } from './'
+import { ITiming, IEmployee } from './'
 
-const { ObjectId } = Mongoose.Schema.Types
+const { ObjectId } = Schema.Types
 
-export const CompanySchema = new Mongoose.Schema({
-  _id: String,
+export interface ICompany extends Document {
+  name: string;
+  address: Address;
+  staff: number;
+  timing: ITiming;
+  admin: IEmployee;
+  currency: string;
+}
+
+export const CompanySchema: Schema = new Schema({
   name: { type: String, required: true },
   address: AddressSchema,
-  staffCount: Number,
-  timing: { type: ObjectId, ref: 'Timing' },
-  admin: { type: ObjectId, ref: 'Employee' },
-  currency: { type: String, enum: currencies },
+  staffCount: { type: Number, required: true },
+  timing: { type: ObjectId, ref: 'Timing', required: true },
+  admin: { type: ObjectId, ref: 'Employee', required: true },
+  currency: { type: String, enum: currencies, required: true },
 })
 
-export const Company = Mongoose.model('Company', CompanySchema, 'company')
-
-export interface CompanyType {
-  _id: string;
-  name: string;
-  address?: Address;
-  staff?: number;
-  timing: TimingType;
-  admin: EmployeeType;
-  currency?: string;
-}
+export const Company = Mongoose.model<ICompany>('Company', CompanySchema, 'company')

@@ -38,7 +38,19 @@ function fixCodeAliases(directory) {
   })
 }
 
-exec('rimraf ./dist && tsc --build', () => {
+exec('rimraf ./dist && tsc --build', (err, stdOut, stdErr) => {
+  if (err) {
+    console.error(err)
+  }
+
+  if (stdOut) {
+    console.log(stdOut)
+  }
+
+  if (stdErr) {
+    console.log(stdErr)
+  }
+
   console.info('Replace absolute paths to relative in build...')
 
   fixCodeAliases(path.join(__dirname, '..', 'dist'))

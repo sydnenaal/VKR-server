@@ -1,28 +1,26 @@
-import Mongoose from 'mongoose'
+import Mongoose, { Schema, Document } from 'mongoose'
 
 import { jobs, roles } from './enums'
-import { CompanyType, WorkspaceType, TimingType } from './'
+import { ICompany, IWorkspace, ITiming } from './'
 
-const { ObjectId } = Mongoose.Schema.Types
+const { ObjectId } = Schema.Types
 
-export const EmployeeSchema = new Mongoose.Schema({
-  _id: String,
-  name: { type: String, required: true },
-  job: { type: String, enum: jobs },
-  role: { type: String, enum: roles },
-  company: { type: ObjectId, ref: 'Company' },
-  workspace: { type: ObjectId, ref: 'Workspace' },
-  timings: { type: ObjectId, ref: 'Timing' },
-})
-
-export const Employee = Mongoose.model('Employee', EmployeeSchema, 'employee')
-
-export interface EmployeeType {
-  _id: string;
+export interface IEmployee extends Document {
   name: string;
   job: string;
   role: string;
-  company: CompanyType;
-  workspace: WorkspaceType;
-  timings: TimingType;
+  company: ICompany;
+  workspace: IWorkspace;
+  timings: ITiming;
 }
+
+export const EmployeeSchema: Schema = new Schema({
+  name: { type: String, required: true },
+  job: { type: String, enum: jobs, required: true },
+  role: { type: String, enum: roles, required: true },
+  company: { type: ObjectId, ref: 'Company', required: true },
+  workspace: { type: ObjectId, ref: 'Workspace', required: true },
+  timings: { type: ObjectId, ref: 'Timing', required: true },
+})
+
+export const Employee = Mongoose.model<IEmployee>('Employee', EmployeeSchema, 'employee')

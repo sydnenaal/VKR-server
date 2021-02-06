@@ -14,15 +14,16 @@ app.use(logger).use(cors)
 app.get('/ping', async (_: any, res: any) => {
   res.send(200)
 })
+;(async function () {
+  app.listen(PORT, () => {
+    const port: string = chalk.white(PORT.toString())
+    const link: string = chalk.white(`http://localhost:${PORT}`)
+    const log: Function = compose(console.log, chalk.blueBright)
 
-app.listen(PORT, () => {
-  const port: string = chalk.white(PORT.toString())
-  const link: string = chalk.white(`http://localhost:${PORT}`)
-  const log: Function = compose(console.log, chalk.blueBright)
-
-  console.clear()
-  log(`Сервер доступен на порту ${port}`)
-  log(`Ссылка на приложение: ${link}`)
-  log('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-')
-  console.log('\n')
-})
+    console.clear()
+    log(`Сервер доступен на порту ${port}`)
+    log(`Ссылка на приложение: ${link}`)
+    log('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-')
+    console.log('\n')
+  })
+})()

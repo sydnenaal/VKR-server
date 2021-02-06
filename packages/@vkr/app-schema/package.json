@@ -1,14 +1,14 @@
 {
   "name": "@vkr/app-schema",
   "version": "0.0.1",
-  "description": "VKR Server mongoose schema",
+  "description": "VKR API mongoose schema",
   "main": "index.ts",
   "private": false,
   "devDependencies": {
     "ts-node": "^9.1.1",
     "typescript": "^4.1.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "mongoose": "^5.11.10"
   }
 }

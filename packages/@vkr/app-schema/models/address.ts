@@ -1,15 +1,15 @@
-import Mongoose from 'mongoose'
+import { Schema, Document } from 'mongoose'
 
-export const AddressSchema = new Mongoose.Schema({
-  country: String,
-  state: String,
-  city: String,
-  zip: String,
-})
-
-export interface Address {
+export interface Address extends Document {
   country: string;
   state: string;
   city: string;
   zip: string;
 }
+
+export const AddressSchema: Schema = new Schema({
+  country: { type: String, required: true },
+  state: { type: String, required: true },
+  city: { type: String, required: true },
+  zip: { type: String, required: true },
+})

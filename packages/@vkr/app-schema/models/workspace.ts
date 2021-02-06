@@ -1,25 +1,23 @@
-import Mongoose from 'mongoose'
+import Mongoose, { Schema, Document } from 'mongoose'
 
-import { CompanyType, EmployeeType, TimingType } from './'
+import { ICompany, IEmployee, ITiming } from './'
 
-const { ObjectId } = Mongoose.Schema.Types
+const { ObjectId } = Schema.Types
 
-export const WorkspaceSchema = new Mongoose.Schema({
-  _id: String,
-  name: { type: String, required: true },
-  staff: Number,
-  company: { type: ObjectId, ref: 'Company' },
-  admin: { type: ObjectId, ref: 'Employee' },
-  timing: { type: ObjectId, ref: 'Timing' },
-})
-
-export const Workspace = Mongoose.model('Workspace', WorkspaceSchema, 'workspace')
-
-export interface WorkspaceType {
-  _id: string;
+export interface IWorkspace extends Document {
   name: string;
   staff: number;
-  company: CompanyType;
-  admin: EmployeeType;
-  timing: TimingType;
+  company: ICompany;
+  admin: IEmployee;
+  timing: ITiming;
 }
+
+export const WorkspaceSchema = new Schema({
+  name: { type: String, required: true },
+  staff: { type: Number, required: true },
+  company: { type: ObjectId, ref: 'Company', required: true },
+  admin: { type: ObjectId, ref: 'Employee', required: true },
+  timing: { type: ObjectId, ref: 'Timing', required: true },
+})
+
+export const Workspace = Mongoose.model<IWorkspace>('Workspace', WorkspaceSchema, 'workspace')

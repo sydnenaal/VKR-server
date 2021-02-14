@@ -9,9 +9,9 @@ export interface IEmployee extends Document {
   name: string;
   job: string;
   role: string;
-  company: ICompany;
-  workspace: IWorkspace;
-  timings: ITiming;
+  company: ICompany['_id'];
+  workspace: IWorkspace['_id'];
+  timings: ITiming['_id'];
 }
 
 export const EmployeeSchema: Schema = new Schema({

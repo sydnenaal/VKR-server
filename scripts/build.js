@@ -2,6 +2,19 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
+// replaceAll polyfill
+if (!String.prototype.replaceAll) {
+  String.prototype.replaceAll = function (str, newStr) {
+    // If a regex pattern
+    if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+      return this.replace(str, newStr)
+    }
+
+    // If a string
+    return this.replace(new RegExp(str, 'g'), newStr)
+  }
+}
+
 // Change absolute paths to npm packages to relative
 function parseJSFiles(pathToFile) {
   const contents = fs.readFileSync(pathToFile, 'utf-8')
@@ -15,7 +28,7 @@ function parseJSFiles(pathToFile) {
       .filter((item) => item === '\\')
       .reduce((acc, item) => `${acc}../`, '')
 
-    const fixedJSCode = contents.replace('@vkr', `${pathToPackages}packages/@vkr`)
+    const fixedJSCode = contents.replaceAll('@vkr', `${pathToPackages}packages/@vkr`)
 
     fs.writeFileSync(pathToFile, fixedJSCode)
   }

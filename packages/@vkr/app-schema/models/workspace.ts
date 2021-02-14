@@ -7,9 +7,9 @@ const { ObjectId } = Schema.Types
 export interface IWorkspace extends Document {
   name: string;
   staff: number;
-  company: ICompany;
-  admin: IEmployee;
-  timing: ITiming;
+  company: ICompany['_id'];
+  admin: IEmployee['_id'];
+  timing: ITiming['_id'];
 }
 
 export const WorkspaceSchema = new Schema({

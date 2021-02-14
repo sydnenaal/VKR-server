@@ -2,21 +2,32 @@ import express from 'express'
 import chalk from 'chalk'
 import cors from 'cors'
 import { compose } from 'ramda'
+import Mongoose from 'mongoose'
+
+import { DATABASE_URI, DATABASE_CONFIG, PORT } from '@vkr/app-constants'
+import { model } from '@vkr/app-schema'
 
 import { logger } from './logger'
 
 const app = express()
-
-const PORT = 3000
 
 app.use(logger).use(cors)
 
 app.get('/ping', async (_: any, res: any) => {
   res.send(200)
 })
-;(async function () {
+
+Mongoose.connect(DATABASE_URI, DATABASE_CONFIG, (err) => {
+  if (err) {
+    console.error(err)
+  }
+
+  model.getById('3')
+
+  console.log('created')
+
   app.listen(PORT, () => {
-    const port: string = chalk.white(PORT.toString())
+    const port: string = chalk.white(PORT)
     const link: string = chalk.white(`http://localhost:${PORT}`)
     const log: Function = compose(console.log, chalk.blueBright)
 
@@ -26,4 +37,4 @@ app.get('/ping', async (_: any, res: any) => {
     log('Добро пожаловать на сервер -=ШИЗОФРЕНИЯ=-')
     console.log('\n')
   })
-})()
+})

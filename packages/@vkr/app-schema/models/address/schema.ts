@@ -1,4 +1,4 @@
-import { Schema, Document } from 'mongoose'
+import { Schema } from 'mongoose'
 
 export interface Address {
   country: string;
@@ -6,8 +6,6 @@ export interface Address {
   city: string;
   zip: string;
 }
-
-export interface AddressDocument extends Address, Document {}
 
 export const AddressSchema: Schema = new Schema({
   country: { type: String, required: true },

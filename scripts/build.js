@@ -17,18 +17,18 @@ if (!String.prototype.replaceAll) {
 
 // Change absolute paths to npm packages to relative
 function parseJSFiles(pathToFile) {
-  const contents = fs.readFileSync(pathToFile, 'utf-8')
+  const fileСontents = fs.readFileSync(pathToFile, 'utf-8')
   const pathToDist = path.join(__dirname, '..', 'dist')
 
-  if (contents.includes('@vkr/')) {
-    //build relative path to 'dist' directory
-    const pathToPackages = pathToFile
+  if (fileСontents.includes('@vkr/')) {
+    //build descent path to 'dist' directory
+    const descentToDistRoot = pathToFile
       .slice(pathToDist.length + 1, pathToFile.length)
       .split('')
-      .filter((item) => item === '\\')
-      .reduce((acc, item) => `${acc}../`, '')
+      .filter((symbol) => symbol === '\\' || symbol === '/')
+      .reduce((path) => `${path}../`, '')
 
-    const fixedJSCode = contents.replaceAll('@vkr', `${pathToPackages}packages/@vkr`)
+    const fixedJSCode = fileСontents.replaceAll('@vkr', `${descentToDistRoot}packages/@vkr`)
 
     fs.writeFileSync(pathToFile, fixedJSCode)
   }

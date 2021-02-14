@@ -1,3 +1,4 @@
+// TODO: delete this shitty dependency
 import { load } from 'ts-dotenv'
 
 const env = load({

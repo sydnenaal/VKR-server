@@ -1,4 +1,4 @@
-const chalk = require('chalk')
+import chalk from 'chalk'
 import { format } from 'date-fns'
 
 import { getColorByStatus, getColorByReqLength } from './utils.js'

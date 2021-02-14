@@ -2,20 +2,33 @@ const { exec } = require('child_process')
 const fs = require('fs')
 const path = require('path')
 
+// replaceAll polyfill
+if (!String.prototype.replaceAll) {
+  String.prototype.replaceAll = function (str, newStr) {
+    // If a regex pattern
+    if (Object.prototype.toString.call(str).toLowerCase() === '[object regexp]') {
+      return this.replace(str, newStr)
+    }
+
+    // If a string
+    return this.replace(new RegExp(str, 'g'), newStr)
+  }
+}
+
 // Change absolute paths to npm packages to relative
 function parseJSFiles(pathToFile) {
-  const contents = fs.readFileSync(pathToFile, 'utf-8')
+  const fileСontents = fs.readFileSync(pathToFile, 'utf-8')
   const pathToDist = path.join(__dirname, '..', 'dist')
 
-  if (contents.includes('@vkr/')) {
-    //build relative path to 'dist' directory
-    const pathToPackages = pathToFile
+  if (fileСontents.includes('@vkr/')) {
+    //build descent path to 'dist' directory
+    const descentToDistRoot = pathToFile
       .slice(pathToDist.length + 1, pathToFile.length)
       .split('')
-      .filter((item) => item === '\\')
-      .reduce((acc, item) => `${acc}../`, '')
+      .filter((symbol) => symbol === '\\' || symbol === '/')
+      .reduce((path) => `${path}../`, '')
 
-    const fixedJSCode = contents.replace('@vkr', `${pathToPackages}packages/@vkr`)
+    const fixedJSCode = fileСontents.replaceAll('@vkr', `${descentToDistRoot}packages/@vkr`)
 
     fs.writeFileSync(pathToFile, fixedJSCode)
   }
@@ -38,7 +51,19 @@ function fixCodeAliases(directory) {
   })
 }
 
-exec('rimraf ./dist && tsc --build', () => {
+exec('rimraf ./dist && tsc --build', (err, stdOut, stdErr) => {
+  if (err) {
+    console.error(err)
+  }
+
+  if (stdOut) {
+    console.log(stdOut)
+  }
+
+  if (stdErr) {
+    console.log(stdErr)
+  }
+
   console.info('Replace absolute paths to relative in build...')
 
   fixCodeAliases(path.join(__dirname, '..', 'dist'))

@@ -3,5 +3,7 @@
   "references": [
     { "path": "./src" },
     { "path": "./packages/@vkr/app-schema" },
+    { "path": "./packages/@vkr/app-constants" },
+    { "path": "./packages/@vkr/app-auth" },
   ]
 }
